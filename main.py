@@ -29,7 +29,8 @@ async def on_startup(_):
 @dp.message_handler(commands=['to_bot'])
 @dp.message_handler(Text(contains='опрос бот'))
 async def get_question(message: types.Message):
-    fsa = "lednev_bot\\service_account.json"
+    # fsa = "lednev_bot\\service_account.json"
+    fsa = "service_account.json"
     sa = gspread.service_account(fsa)
     sh = sa.open("Microelectronics")
 
