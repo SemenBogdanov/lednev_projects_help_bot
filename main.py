@@ -3,7 +3,7 @@ import logging
 import gspread
 from aiogram import Bot, Dispatcher, types
 from aiogram.dispatcher.filters import Text
-
+from datetime import datetime as dt
 from key import token
 from aiogram.utils import executor
 
@@ -27,7 +27,7 @@ async def on_startup(_):
 
 
 @dp.message_handler(commands=['to_bot'])
-@dp.message_handler(Text(contains='вопрос боту'))
+@dp.message_handler(Text(contains='опрос бот'))
 async def get_question(message: types.Message):
     fsa = "lednev_bot\\service_account.json"
     sa = gspread.service_account(fsa)
@@ -36,11 +36,15 @@ async def get_question(message: types.Message):
     wsh = sh.worksheet('Data')
 
     try:
-        wsh.append_row([message.chat.id, message.from_user.id, message.from_user.username, message.text,
-                        message.from_user.full_name])
+        wsh.append_row(
+            [message.chat.id, message.from_user.id, str(message.date.now()), message.from_user.username, message.text,
+             message.from_user.full_name])
         await message.reply('Ваш вопрос добавлен в общий список вопросов. Спасибо.')
-    except:
+    except Exception as e:
+        logging.info(e)
         await message.reply('Не удалось зафиксировать Ваш вопрос, просьба направить его почтой, спасибо!')
+        await bot.send_message('287994530', "Ошибка в работе бота lednev_bot: не удалось записать данные в гугл-шит. "
+                                            f"Подробности: \n {e}")
 
 
 # def register_bot_handlers(pp: Dispatcher):
