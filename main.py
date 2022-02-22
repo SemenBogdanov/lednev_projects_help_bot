@@ -43,7 +43,8 @@ async def get_question(message: types.Message):
         await message.reply('Ваш вопрос добавлен в общий список вопросов. Спасибо.')
     except Exception as e:
         logging.info(e)
-        await message.reply('Не удалось зафиксировать Ваш вопрос, просьба направить его почтой, спасибо!')
+        await message.reply('Не удалось зафиксировать Ваш вопрос, просьба направить на почту '
+                            's.bogdanov@ac.gov.ru, спасибо!')
         await bot.send_message('287994530', "Ошибка в работе бота lednev_bot: не удалось записать данные в гугл-шит. "
                                             f"Подробности: \n {e}")
 
