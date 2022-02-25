@@ -38,8 +38,8 @@ async def get_question(message: types.Message):
 
     try:
         wsh.append_row(
-            [message.chat.id, message.from_user.id, str(message.date.now()), message.from_user.username, message.text,
-             message.from_user.full_name])
+            [str(message.date.now().strftime('%Y-%m-%d %H:%M')), message.chat.id, " ", message.from_user.id,
+             message.from_user.username, message.from_user.full_name, message.text])
         await message.reply('Ваш вопрос добавлен в общий список вопросов. Спасибо.')
     except Exception as e:
         logging.info(e)
